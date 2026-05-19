@@ -77,7 +77,7 @@ fun  PantallaCalculadora () {
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Escoja que porcentaje de propina aplicar: "
+            text = "Escoja que porcentaje de propina a aplicar: "
         )
 
         //Botones con porcentajes
@@ -119,16 +119,16 @@ fun  PantallaCalculadora () {
             text = "Porcentaje seleccionado: ${porcentajePropina.value}%"
         )
 
-        var resultado = remember { mutableStateOf("") }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         var propina = remember { mutableStateOf(0.0) }
-
+        var total = remember { mutableStateOf(0.0) }
         Button(
             onClick = {
                 var monto = montoCuenta.value.toDoubleOrNull() ?: 0.0
                 propina.value = monto * porcentajePropina.value / 100
+                total.value = monto + propina.value
 
             }
 
@@ -139,6 +139,9 @@ fun  PantallaCalculadora () {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Valor de propina: ${propina.value}"
+        )
+        Text(
+            text = "Total a pagar: ${total.value}"
         )
 
     }
