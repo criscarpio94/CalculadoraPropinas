@@ -5,9 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fitInside
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.calculadorapropinas.ui.theme.CalculadoraPropinasTheme
 import androidx.compose.ui.unit.sp
+import kotlin.math.absoluteValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +52,7 @@ fun  PantallaCalculadora () {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
@@ -62,6 +66,7 @@ fun  PantallaCalculadora () {
         //Declaracion de variables
         var montoCuenta = remember { mutableStateOf("" ) }
         var porcentajePropina = remember { mutableStateOf(0) }
+
 
         //TextField para recibir el monto de la cuenta
         TextField(
@@ -109,9 +114,32 @@ fun  PantallaCalculadora () {
             )
         }
 
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(
+            text = "Porcentaje seleccionado: ${porcentajePropina.value}%"
+        )
 
+        var resultado = remember { mutableStateOf("") }
 
+        Spacer(modifier = Modifier.height(20.dp))
 
+        var propina = remember { mutableStateOf(0.0) }
+
+        Button(
+            onClick = {
+                var monto = montoCuenta.value.toDoubleOrNull() ?: 0.0
+                propina.value = monto * porcentajePropina.value / 100
+
+            }
+
+        ) {
+            Text("Calcular")
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Valor de propina: ${propina.value}"
+        )
 
     }
 }
